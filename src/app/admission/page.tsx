@@ -1,23 +1,19 @@
 'use client'
+/* eslint-disable react/no-unescaped-entities */
 
 import Image from "next/image";
-import { useEffect, useState } from "react";
+import { } from "react";
 import { motion } from 'framer-motion';
 import { 
   fadeInUp, 
   fadeInLeft, 
   fadeInRight, 
   staggerContainer,
-  defaultViewport, 
-  scaleUp,
+  defaultViewport 
 } from '@/components/animations';
 
 export default function Admission() {
-  const [isMounted, setIsMounted] = useState(false);
-
-  useEffect(() => {
-    setIsMounted(true);
-  }, []);
+  
 
   return (
     <>

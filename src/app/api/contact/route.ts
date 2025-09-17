@@ -1,9 +1,16 @@
 import { NextResponse } from 'next/server';
 import nodemailer from 'nodemailer';
 
+type ContactBody = {
+  name: string;
+  email: string;
+  phone?: string;
+  message: string;
+};
+
 export async function POST(request: Request) {
   try {
-    const { name, email, phone, message } = await request.json();
+    const { name, email, phone, message } = (await request.json()) as ContactBody;
 
     // Validate required fields
     if (!name || !email || !message) {
@@ -14,7 +21,7 @@ export async function POST(request: Request) {
     }
 
     // Email content
-    const mailOptions = {
+    const mailOptions: nodemailer.SendMailOptions = {
       to: 'bishoymamdouh20@gmail.com',
       from:
         process.env.EMAIL_FROM ||
@@ -57,21 +64,17 @@ export async function POST(request: Request) {
         },
       });
 
-      await transporter.sendMail(mailOptions as any);
+      await transporter.sendMail(mailOptions);
       console.log('Message sent successfully');
 
       return NextResponse.json(
         { message: 'Message sent successfully' },
         { status: 200 }
       );
-    } catch (sendError: any) {
+    } catch (sendError) {
       console.error('Error sending email:', sendError);
 
-      let errorMessage = 'Failed to send email. Please try again later.';
-      if (sendError?.response) {
-        errorMessage = 'Email service error. Please try again later.';
-      }
-
+      const errorMessage = 'Failed to send email. Please try again later.';
       return NextResponse.json(
         { message: errorMessage },
         { status: 500 }
