@@ -1,8 +1,4 @@
 import { NextResponse } from 'next/server';
-import sgMail from '@sendgrid/mail';
-
-// Initialize SendGrid with your API key
-sgMail.setApiKey(process.env.REDACTED_SENDGRID_KEY || 'REDACTED_SENDGRID_KEY');
 
 export async function POST(request: Request) {
   try {
